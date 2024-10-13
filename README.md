@@ -17,37 +17,43 @@ Execute the following commands in order to complete the installation:
     sudo apt-get update && sudo apt-get install haproxy -y
     ```
 
-2. **Master1 Installation**:
+2. **Configure HAProxy**: After installing HAProxy, replace the default configuration with the provided `haproxy.cfg` file:
+
+    ```bash
+    sudo cat /path/to/haproxy.cfg > /etc/haproxy/haproxy.cfg
+    ```
+
+3. **Master1 Installation**:
 
     ```bash
     curl -sfL https://get.k3s.io | K3S_TOKEN=SECRET sh -s - server --cluster-init --tls-san=<haproxyIP>
     ```
 
-3. **Get Node Token** (on Master1):
+4. **Get Node Token** (on Master1):
 
     ```bash
     sudo cat /var/lib/rancher/k3s/server/node-token
     ```
 
-4. **Master2 Installation**:
+5. **Master2 Installation**:
 
     ```bash
     curl -sfL https://get.k3s.io | K3S_TOKEN=<node-token> sh -s - server --server https://<master1IP>:6443 --tls-san=<haproxyIP>
     ```
 
-5. **Get K3s Configuration File** (on Master1):
+6. **Get K3s Configuration File** (on Master1):
 
     ```bash
     cat /etc/rancher/k3s/k3s.yaml
     ```
 
-6. **Install Kubectl on HAProxy Server**:
+7. **Install Kubectl on HAProxy Server**:
 
     ```bash
     # Kubectl installation steps (add your system-specific commands here)
     ```
 
-7. **Configure Kubectl**:
+8. **Configure Kubectl**:
 
     ```bash
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
